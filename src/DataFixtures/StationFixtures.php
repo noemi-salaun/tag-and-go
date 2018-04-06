@@ -45,7 +45,7 @@ class StationFixtures extends Fixture implements OrderedFixtureInterface
                 ],
                 [
                     'name' => 'Boulogne', 'address' => 'Route de la Grande Cascade',
-                    'latitude' => 48.862456199187356, 'longitude' => -2.2491073608398438,
+                    'latitude' => 48.862456199187356, 'longitude' => 2.2491073608398438,
                     'bikesCapacity' => 4, 'bikesAvailable' => 4,
                 ],
             ],
@@ -68,6 +68,7 @@ class StationFixtures extends Fixture implements OrderedFixtureInterface
                     $cityStationData['longitude'],
                     $cityStationData['bikesCapacity']
                 );
+                $station->setActivated(true);
                 $station->setBikesAvailable($cityStationData['bikesAvailable']);
                 $manager->persist($station);
             }

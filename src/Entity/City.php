@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CityRepository")
@@ -14,21 +15,29 @@ class City
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"read_city"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"read_city"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @Groups({"read_city"})
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @Groups({"read_city"})
      */
     private $longitude;
 

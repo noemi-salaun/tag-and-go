@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\City;
 use App\Entity\Station;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
@@ -14,37 +15,54 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class StationRepository extends ServiceEntityRepository
 {
+
+    /** The scaling to convert kilometers to latitude/longitude. */
+    private const SCALE_FROM_KM = 6371;
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Station::class);
     }
 
-//    /**
-//     * @return Station[] Returns an array of Station objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Finds the stations of a city, for a given page and limit.
+     *
+     * @return Station[]
+     */
+    public function findPage(City $city, int $page, int $limit): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('station')
+            ->where('station.activated = true')
+            ->andWhere('station.city = :city')->setParameter('city', $city)
+            ->orderBy('station.id', 'ASC')
+            ->setFirstResult($page * $limit)
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Station
+    /**
+     * Finds the stations near some coordinates.
+     *
+     * @return Station[]
+     */
+    public function findNear(float $latitude, float $longitude, int $radius): array
     {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        // Algorithm taken from https://stackoverflow.com/questions/7783684/select-coordinates-which-fall-within-a-radius-of-a-central-point
+
+//        return $this->createQueryBuilder('station')
+//            ->where('station.activated = true')
+//            ->andWhere('acos(sin(station.latitude * 0.0175) * sin(:latitude * 0.0175)
+//                    + cos(station.latitude * 0.0175) * cos(:latitude * 0.0175) *
+//                    cos((:longitude * 0.0175) - (station.longitude * 0.0175))
+//                ) * 6371 <= :radius')
+//            ->orderBy('station.id', 'ASC')
+//            ->setParameters([
+//                'latitude' => $latitude,
+//                'longitude' => $longitude,
+//                'radius' => $radius,
+//            ])
+//            ->getQuery()
+//            ->getResult();
     }
-    */
 }

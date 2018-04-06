@@ -14,37 +14,26 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class CityRepository extends ServiceEntityRepository
 {
+
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, City::class);
     }
 
-//    /**
-//     * @return City[] Returns an array of City objects
-//     */
-    /*
-    public function findByExampleField($value)
+    /**
+     * Finds the cities for a given page and limit.
+     *
+     * @return City[]
+     */
+    public function findPage(int $page, int $limit): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+        return $this->createQueryBuilder('city')
+            ->where('city.activated = true')
+            ->orderBy('city.id', 'ASC')
+            ->setFirstResult($page * $limit)
+            ->setMaxResults($limit)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?City
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

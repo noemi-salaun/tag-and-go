@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StationRepository")
@@ -14,6 +15,8 @@ class Station
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"read_station"})
      */
     private $id;
 
@@ -24,41 +27,57 @@ class Station
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Groups({"read_station"})
      */
     private $creationDate;
 
     /**
      * @ORM\Column(type="datetime")
+     *
+     * @Groups({"read_station"})
      */
     private $lastUpdate;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"read_station"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Groups({"read_station"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @Groups({"read_station"})
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
+     *
+     * @Groups({"read_station"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"read_station"})
      */
     private $bikesCapacity;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Groups({"read_station"})
      */
     private $bikesAvailable;
 
@@ -166,6 +185,18 @@ class Station
     public function setBikesAvailable(int $bikesAvailable): void
     {
         $this->bikesAvailable = $bikesAvailable;
+    }
+
+    public function decrementBikesAvailable(): int
+    {
+        $this->bikesAvailable--;
+        return $this->bikesAvailable;
+    }
+
+    public function incrementBikesAvailable(): int
+    {
+        $this->bikesAvailable++;
+        return $this->bikesAvailable;
     }
 
     public function isActivated(): bool
