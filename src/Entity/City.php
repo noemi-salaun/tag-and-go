@@ -32,6 +32,11 @@ class City
      */
     private $longitude;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activated = false;
+
 
     public function __construct(string $name, float $latitude, float $longitude)
     {
@@ -73,5 +78,15 @@ class City
     public function setLongitude(float $longitude): void
     {
         $this->longitude = $longitude;
+    }
+
+    public function isActivated(): bool
+    {
+        return $this->activated;
+    }
+
+    public function setActivated(bool $activated): void
+    {
+        $this->activated = $activated;
     }
 }

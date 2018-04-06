@@ -43,11 +43,6 @@ class Station
     private $address;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
-
-    /**
      * @ORM\Column(type="float")
      */
     private $latitude;
@@ -67,25 +62,30 @@ class Station
      */
     private $bikesAvailable;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $activated = false;
+
     public function __construct(
         City $city,
         \DateTime $creationDate,
         string $name,
         string $address,
-        string $description,
         float $latitude,
         float $longitude,
         int $bikesCapacity
-    ) {
-        $this->city          = $city;
-        $this->creationDate  = $creationDate;
-        $this->lastUpdate    = $creationDate;
-        $this->name          = $name;
-        $this->address       = $address;
-        $this->description   = $description;
-        $this->latitude      = $latitude;
-        $this->longitude     = $longitude;
+    )
+    {
+        $this->city = $city;
+        $this->creationDate = $creationDate;
+        $this->lastUpdate = $creationDate;
+        $this->name = $name;
+        $this->address = $address;
+        $this->latitude = $latitude;
+        $this->longitude = $longitude;
         $this->bikesCapacity = $bikesCapacity;
+        $this->bikesAvailable = $bikesCapacity;
     }
 
     public function getId(): ?int
@@ -128,16 +128,6 @@ class Station
         $this->address = $address;
     }
 
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(string $description): void
-    {
-        $this->description = $description;
-    }
-
     public function getLatitude(): float
     {
         return $this->latitude;
@@ -176,5 +166,15 @@ class Station
     public function setBikesAvailable(int $bikesAvailable): void
     {
         $this->bikesAvailable = $bikesAvailable;
+    }
+
+    public function isActivated(): bool
+    {
+        return $this->activated;
+    }
+
+    public function setActivated(bool $activated): void
+    {
+        $this->activated = $activated;
     }
 }

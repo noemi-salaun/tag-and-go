@@ -29,10 +29,15 @@ phpunit: db ## execute project unit tests
 		docker-compose exec php bash -lc './bin/phpunit'
 
 .PHONY: db
-db: ## recreate database
-		-docker-compose exec php bash -lc './bin/console doctrine:database:drop --force'
+db: wait-for-db ## recreate database
+		docker-compose exec php bash -lc './bin/console doctrine:database:drop --force'
 		docker-compose exec php bash -lc './bin/console doctrine:database:create'
 		docker-compose exec php bash -lc './bin/console doctrine:migrations:migrate -n'
+		docker-compose exec php bash -lc './bin/console doctrine:fixtures:load -n'
+
+.PHONY: wait-for-db
+wait-for-db: ## wait for MariaDB initialization
+		docker-compose exec php php -r "set_time_limit(60);for(;;){if(@fsockopen('mariadb',3306)){break;}echo \"Waiting for MariaDB\n\";sleep(1);}"
 
 .PHONY: bash
 bash: ## gets inside a container, use 's' variable to select a service. make s=php ba
