@@ -43,7 +43,7 @@ class ApiController extends Controller
             ->getRepository('App:City')
             ->findPage($page, $limit);
 
-        return $this->getJsonResponse($cities, ['read_city']);
+        return $this->getJsonResponse($cities);
     }
 
     /**
@@ -70,7 +70,7 @@ class ApiController extends Controller
             ->getRepository('App:Station')
             ->findPage($city, $page, $limit);
 
-        return $this->getJsonResponse($stations, ['read_station']);
+        return $this->getJsonResponse($stations);
     }
 
     /**
@@ -108,7 +108,7 @@ class ApiController extends Controller
             ->getRepository('App:Station')
             ->findNear($latitude, $longitude, $radius);
 
-        return $this->getJsonResponse($stations, ['read_station']);
+        return $this->getJsonResponse($stations);
     }
 
     /**
@@ -177,13 +177,13 @@ class ApiController extends Controller
     /**
      * Create a new JsonResponse with data serialized using context groups.
      */
-    private function getJsonResponse($data, array $groups): JsonResponse
+    private function getJsonResponse($data): JsonResponse
     {
         // Use the ATOM date format because the ISO-8601 is deprecate.
         // See https://secure.php.net/manual/en/class.datetime.php#datetime.constants.cookie
         return new JsonResponse(
             $this->serializer->serialize($data, 'json', [
-                'groups' => $groups,
+                'groups' => ['read'],
                 DateTimeNormalizer::FORMAT_KEY => \DateTime::ATOM,
             ]),
             Response::HTTP_OK,

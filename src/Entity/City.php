@@ -16,28 +16,28 @@ class City
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"read_city"})
+     * @Groups({"read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"read_city"})
+     * @Groups({"read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="float")
      *
-     * @Groups({"read_city"})
+     * @Groups({"read"})
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
      *
-     * @Groups({"read_city"})
+     * @Groups({"read"})
      */
     private $longitude;
 

@@ -16,7 +16,7 @@ class Station
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $id;
 
@@ -28,56 +28,56 @@ class Station
     /**
      * @ORM\Column(type="datetime")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $creationDate;
 
     /**
      * @ORM\Column(type="datetime")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $lastUpdate;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255)
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="float")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $latitude;
 
     /**
      * @ORM\Column(type="float")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $bikesCapacity;
 
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"read_station"})
+     * @Groups({"read"})
      */
     private $bikesAvailable;
 
@@ -207,5 +207,15 @@ class Station
     public function setActivated(bool $activated): void
     {
         $this->activated = $activated;
+    }
+
+    public function getCity():City
+    {
+        return $this->city;
+    }
+
+    public function setCity(City $city): void
+    {
+        $this->city = $city;
     }
 }

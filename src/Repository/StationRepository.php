@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\City;
 use App\Entity\Station;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\ResultSetMappingBuilder;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -15,9 +16,6 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  */
 class StationRepository extends ServiceEntityRepository
 {
-
-    /** The scaling to convert kilometers to latitude/longitude. */
-    private const SCALE_FROM_KM = 6371;
 
     public function __construct(RegistryInterface $registry)
     {
@@ -48,21 +46,32 @@ class StationRepository extends ServiceEntityRepository
      */
     public function findNear(float $latitude, float $longitude, int $radius): array
     {
-        // Algorithm taken from https://stackoverflow.com/questions/7783684/select-coordinates-which-fall-within-a-radius-of-a-central-point
+        // Prepare the result set to contains Station entities.
+        $rsmBuilder = new ResultSetMappingBuilder($this->_em);
+        $rsmBuilder->addRootEntityFromClassMetadata(Station::class, 'station');
+        $selectClause = $rsmBuilder->generateSelectClause();
 
-//        return $this->createQueryBuilder('station')
-//            ->where('station.activated = true')
-//            ->andWhere('acos(sin(station.latitude * 0.0175) * sin(:latitude * 0.0175)
-//                    + cos(station.latitude * 0.0175) * cos(:latitude * 0.0175) *
-//                    cos((:longitude * 0.0175) - (station.longitude * 0.0175))
-//                ) * 6371 <= :radius')
-//            ->orderBy('station.id', 'ASC')
-//            ->setParameters([
-//                'latitude' => $latitude,
-//                'longitude' => $longitude,
-//                'radius' => $radius,
-//            ])
-//            ->getQuery()
-//            ->getResult();
+        // Get the Station table name to prevent breaking changes in case of table renaming.
+        $tableName = $this->_class->getTableName();
+
+        // Algorithm taken from https://stackoverflow.com/questions/7783684/select-coordinates-which-fall-within-a-radius-of-a-central-point
+        $sql = "
+SELECT $selectClause FROM $tableName as station
+WHERE station.activated = 1
+AND (acos(sin(station.latitude * 0.0175) * sin(:latitude * 0.0175)
+    + cos(station.latitude * 0.0175) * cos(:latitude * 0.0175) *
+    cos((:longitude * 0.0175) - (station.longitude * 0.0175))
+  ) * 6371 <= :radius)
+ORDER BY station.id
+";
+
+        $query = $this->_em->createNativeQuery($sql, $rsmBuilder);
+        $query->setParameters([
+            'latitude' => $latitude,
+            'longitude' => $longitude,
+            'radius' => $radius,
+        ]);
+
+        return $query->getResult();
     }
 }

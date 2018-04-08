@@ -24,8 +24,8 @@ build: ## build environment and initialize composer and project dependencies
 up: ## spin up environment
 		docker-compose up -d
 
-.PHONY: phpunit
-phpunit: db ## execute project unit tests
+.PHONY: test
+test: db ## execute project unit tests
 		docker-compose exec php bash -lc './bin/phpunit'
 
 .PHONY: db
