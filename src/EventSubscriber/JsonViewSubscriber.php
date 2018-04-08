@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -29,20 +31,30 @@ class JsonViewSubscriber implements EventSubscriberInterface
      */
     private $serializer;
 
-    public function __construct(SerializerInterface $serializer)
+    /**
+     * @var bool
+     */
+    private $isDebug;
+
+    public function __construct(SerializerInterface $serializer, bool $isDebug)
     {
         $this->serializer = $serializer;
+        $this->isDebug = $isDebug;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             KernelEvents::CONTROLLER => 'checkForApiController',
             KernelEvents::VIEW => 'serializeData',
+            KernelEvents::EXCEPTION => 'serializeError',
         ];
     }
 
-    public function checkForApiController(FilterControllerEvent $event)
+    /**
+     * Check if the controller is an API controller.
+     */
+    public function checkForApiController(FilterControllerEvent $event): void
     {
         $controller = $event->getController();
 
@@ -62,7 +74,10 @@ class JsonViewSubscriber implements EventSubscriberInterface
         $event->getRequest()->attributes->set(self::IS_API_FLAG, true);
     }
 
-    public function serializeData(GetResponseForControllerResultEvent $event)
+    /**
+     * Serialize the result of the controller into a nicely serialized JSON Response.
+     */
+    public function serializeData(GetResponseForControllerResultEvent $event): void
     {
 
         // check to see if checkForApiController marked this as an API request
@@ -78,6 +93,38 @@ class JsonViewSubscriber implements EventSubscriberInterface
         $event->setResponse($this->getJsonResponse($data));
     }
 
+    /**
+     * Serialize an exception into a nice JSON response.
+     */
+    public function serializeError(GetResponseForExceptionEvent $event): void
+    {
+        // check to see if checkForApiController marked this as an API request
+        if (!$event->getRequest()->attributes->get(self::IS_API_FLAG, false)) {
+            return;
+        }
+
+        $exception = $event->getException();
+
+        // Default to status code 500, or get the status code from the HTTP exception.
+        $code = 500;
+        if ($exception instanceof HttpException) {
+            $code = $exception->getStatusCode();
+        }
+
+        $responseData = [
+            'error' => [
+                'code' => $code,
+                'message' => $exception->getMessage()
+            ]
+        ];
+
+        // To prevent leaking internal information, the stack trace is shown only in debug mode.
+        if ($this->isDebug) {
+            $responseData['error']['trace'] = $exception->getTrace();
+        }
+
+        $event->setResponse(new JsonResponse($responseData, $code));
+    }
 
     /**
      * Create a new JsonResponse with data serialized using context groups.
