@@ -11,12 +11,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * CRUD controller for stations.
+ *
  * @Route("/stations")
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
  */
 class StationAdminController extends Controller
 {
 
     /**
+     * Display all the stations.
+     *
      * @Route("", name="admin_station_index", methods="GET")
      */
     public function index(StationRepository $stationRepository): Response
@@ -25,6 +31,8 @@ class StationAdminController extends Controller
     }
 
     /**
+     * Handle the creation of a station.
+     *
      * @Route("/new", name="admin_station_new", methods="GET|POST")
      */
     public function new(Request $request): Response
@@ -52,6 +60,8 @@ class StationAdminController extends Controller
     }
 
     /**
+     * Display station details.
+     *
      * @Route("/{id}", name="admin_station_show", methods="GET")
      */
     public function show(Station $station): Response
@@ -60,6 +70,8 @@ class StationAdminController extends Controller
     }
 
     /**
+     * Handle the edition of a station.
+     *
      * @Route("/{id}/edit", name="admin_station_edit", methods="GET|POST")
      */
     public function edit(Request $request, Station $station): Response
@@ -83,6 +95,8 @@ class StationAdminController extends Controller
     }
 
     /**
+     * Delete the given station.
+     *
      * @Route("/{id}", name="admin_station_delete", methods="DELETE")
      */
     public function delete(Request $request, Station $station): Response

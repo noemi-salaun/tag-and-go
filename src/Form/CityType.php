@@ -8,6 +8,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class CityType
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class CityType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

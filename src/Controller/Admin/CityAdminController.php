@@ -11,11 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
+ * CRUD controller for cities.
+ *
  * @Route("/cities")
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
  */
 class CityAdminController extends Controller
 {
     /**
+     * Display all the cities.
+     *
      * @Route("", name="admin_city_index", methods="GET")
      */
     public function index(CityRepository $cityRepository): Response
@@ -24,6 +30,8 @@ class CityAdminController extends Controller
     }
 
     /**
+     * Handle the creation of a new city.
+     *
      * @Route("/new", name="admin_city_new", methods="GET|POST")
      */
     public function new(Request $request): Response
@@ -48,6 +56,8 @@ class CityAdminController extends Controller
     }
 
     /**
+     * Display city details.
+     *
      * @Route("/{id}", name="admin_city_show", methods="GET")
      */
     public function show(City $city): Response
@@ -56,6 +66,8 @@ class CityAdminController extends Controller
     }
 
     /**
+     * Handle the edition of a city.
+     *
      * @Route("/{id}/edit", name="admin_city_edit", methods="GET|POST")
      */
     public function edit(Request $request, City $city): Response
@@ -76,6 +88,8 @@ class CityAdminController extends Controller
     }
 
     /**
+     * Delete the given city.
+     *
      * @Route("/{id}", name="admin_city_delete", methods="DELETE")
      */
     public function delete(Request $request, City $city): Response

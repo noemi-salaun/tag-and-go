@@ -2,11 +2,13 @@
 #    resource: ../../src/Controller/
 #    type: annotation
 
+# REST API controllers
 api:
     resource: ../../src/Controller/Api
     prefix: /api
     type: annotation
 
+# Admin pages
 admin:
     resource: ../../src/Controller/Admin
     prefix: /admin

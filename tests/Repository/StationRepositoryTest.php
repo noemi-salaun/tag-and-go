@@ -5,6 +5,11 @@ namespace App\Tests\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * Class StationRepositoryTest
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class StationRepositoryTest extends KernelTestCase
 {
     /**

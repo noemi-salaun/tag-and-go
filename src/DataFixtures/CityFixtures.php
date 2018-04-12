@@ -7,6 +7,11 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
+/**
+ * Class CityFixtures
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class CityFixtures extends Fixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)

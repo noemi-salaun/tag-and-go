@@ -11,6 +11,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Stations API controller.
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class StationApiController extends Controller implements ApiControllerInterface
 {
     use WithPaginationTrait;
@@ -52,15 +57,16 @@ class StationApiController extends Controller implements ApiControllerInterface
      */
     public function getNearStations(Request $request): array
     {
-        $latitude = $request->query->get('latitude');
-        $longitude = $request->query->get('longitude');
+        $latitude = $request->query->get('lat');
+        $longitude = $request->query->get('lng');
 
+        // Check parameters validity.
         if (null === $latitude || null === $longitude) {
-            throw new BadRequestHttpException('Parameters latitude and longitude are required.');
+            throw new BadRequestHttpException('Parameters "lat" and "lng" are required.');
         }
 
         if (!is_numeric($latitude) || !is_numeric($longitude)) {
-            throw new BadRequestHttpException('Parameters latitude and longitude should be numerics.');
+            throw new BadRequestHttpException('Parameters "lat" and "lng" should be numerics.');
         }
 
         $latitude = (float)$latitude;

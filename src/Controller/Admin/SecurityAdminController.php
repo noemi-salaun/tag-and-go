@@ -7,17 +7,23 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Security controller for admin pages.
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class SecurityAdminController extends Controller
 {
     /**
+     * Handle the login form.
+     *
      * @Route("/login", name="admin_login")
      */
     public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
-        // get the security error if there is one
+        // Get the security error if there is one.
         $error = $authenticationUtils->getLastAuthenticationError();
 
-        // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('admin/security/login.html.twig', array(

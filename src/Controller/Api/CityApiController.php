@@ -11,6 +11,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+/**
+ * Cities API controller.
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class CityApiController extends Controller implements ApiControllerInterface
 {
     use WithPaginationTrait;

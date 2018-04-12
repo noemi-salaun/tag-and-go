@@ -22,6 +22,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        # Use a basic form to secure admin pages
         admin:
             pattern:  ^/admin
             anonymous: ~
@@ -32,6 +33,7 @@ security:
                 path:   /admin/logout
                 target: /admin/login
 
+        # Use Lexik JWT handler for token generation
         api_login:
             pattern:  ^/api/login
             stateless: true
@@ -42,6 +44,7 @@ security:
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
 
+        # Use Lexik JWT authenticator to secure the API
         api:
             pattern:   ^/api
             stateless: true

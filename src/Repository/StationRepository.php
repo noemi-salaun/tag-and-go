@@ -13,6 +13,8 @@ use Symfony\Bridge\Doctrine\RegistryInterface;
  * @method Station|null findOneBy(array $criteria, array $orderBy = null)
  * @method Station[]    findAll()
  * @method Station[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
  */
 class StationRepository extends ServiceEntityRepository
 {

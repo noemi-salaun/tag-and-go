@@ -10,6 +10,11 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class StationType
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
+ */
 class StationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

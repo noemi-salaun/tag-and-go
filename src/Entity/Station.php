@@ -7,6 +7,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StationRepository")
+ *
+ * @author Noémi Salaün <noemi.salaun@gmail.com>
  */
 class Station
 {
