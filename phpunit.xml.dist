@@ -16,6 +16,13 @@
         <env name="SHELL_VERBOSITY" value="-1" />
         <env name="DATABASE_URL" value="mysql://tapandgo:tapandgo@mariadb:3306/tapandgo" />
         <!-- define your env variables for the test env here -->
+
+        <!-- ###+ lexik/jwt-authentication-bundle ### -->
+        <!-- Key paths should be relative to the project directory -->
+        <env name="JWT_PRIVATE_KEY_PATH" value="config/jwt/private.pem"/>
+        <env name="JWT_PUBLIC_KEY_PATH" value="config/jwt/public.pem"/>
+        <env name="JWT_PASSPHRASE" value="7d0e30986930125b0832cab23b95b721"/>
+        <!-- ###- lexik/jwt-authentication-bundle ### -->
     </php>
 
     <testsuites>

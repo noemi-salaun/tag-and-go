@@ -22,6 +22,10 @@ build: ## build environment and initialize composer and project dependencies
 		docker-compose run --rm php bash -lc 'yarn install'
 		docker-compose run --rm php bash -lc 'yarn run encore dev'
 
+.PHONY: php
+php: ## gets inside the php container
+		docker-compose exec php bash
+
 .PHONY: encore
 encore: ## run webpack-encore in watch mode
 		docker-compose exec php bash -lc 'yarn run encore dev --watch'

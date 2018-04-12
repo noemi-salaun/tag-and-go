@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Login{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/login.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="app_login_form">
+
+    <form action="{{ path('admin_login') }}" method="post">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="_username"  value="{{ last_username }}">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="_password">
+        </div>
+
+        <button class="btn btn-primary" type="submit">login</button>
+
+        {% if error %}
+            <span class="app_login_error">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+        {% endif %}
+    </form>
+
+</div>
+{% endblock %}

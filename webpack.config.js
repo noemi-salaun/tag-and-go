@@ -14,6 +14,7 @@ Encore
     // .addEntry('js/app', './assets/js/app.js')
     .addStyleEntry('css/global', './assets/css/global.scss')
     .addStyleEntry('css/admin', './assets/css/admin.scss')
+    .addStyleEntry('css/login', './assets/css/login.scss')
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader()

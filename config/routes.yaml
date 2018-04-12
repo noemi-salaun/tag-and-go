@@ -1,3 +1,12 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+home:
+    path: /
+    controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::redirectAction
+    defaults:
+        route: admin_city_index
+        permanent: true
+
+api_login_check:
+    path: /api/login_check
+
+admin_logout:
+   path: /admin/logout

@@ -18,6 +18,9 @@
                 <li {% if app.request.get('_route') starts with 'admin_station' %}class="active"{% endif %}>
                     <a href="{{ path('admin_station_index') }}">Stations</a>
                 </li>
+                <li>
+                    <a href="{{ path('admin_logout') }}">Logout</a>
+                </li>
             </ul>
         </nav>
 
