@@ -1,0 +1,66 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Station{% endblock %}
+
+{% block body_admin %}
+    <h1>Station</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ station.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ station.name }}</td>
+            </tr>
+            <tr>
+                <th>City</th>
+                <td>
+                    <a href="{{ path('admin_city_show', {'id': station.city.id}) }}">
+                        {{ station.city.id }} - {{ station.city.name }}
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <th>Address</th>
+                <td>{{ station.address }}</td>
+            </tr>
+            <tr>
+                <th>Latitude</th>
+                <td>{{ station.latitude }}</td>
+            </tr>
+            <tr>
+                <th>Longitude</th>
+                <td>{{ station.longitude }}</td>
+            </tr>
+            <tr>
+                <th>BikesCapacity</th>
+                <td>{{ station.bikesCapacity }}</td>
+            </tr>
+            <tr>
+                <th>BikesAvailable</th>
+                <td>{{ station.bikesAvailable }}</td>
+            </tr>
+            <tr>
+                <th>CreationDate</th>
+                <td>{{ station.creationDate ? station.creationDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>LastUpdate</th>
+                <td>{{ station.lastUpdate ? station.lastUpdate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Activated</th>
+                <td>{{ station.activated ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_station_index') }}">back to list</a>
+
+    <a href="{{ path('admin_station_edit', {'id': station.id}) }}">edit</a>
+
+    {{ include('admin/station/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Edit Station{% endblock %}
+
+{% block body_admin %}
+    <h1>Edit Station</h1>
+
+    {{ include('admin/station/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('admin_station_index') }}">back to list</a>
+
+    {{ include('admin/station/_delete_form.html.twig') }}
+{% endblock %}

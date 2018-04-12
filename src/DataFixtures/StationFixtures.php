@@ -66,7 +66,9 @@ class StationFixtures extends Fixture implements OrderedFixtureInterface
                     $cityStationData['address'],
                     $cityStationData['latitude'],
                     $cityStationData['longitude'],
-                    $cityStationData['bikesCapacity']
+                    $cityStationData['bikesCapacity'],
+                    $cityStationData['bikesAvailable'],
+                    true
                 );
                 $station->setActivated(true);
                 $station->setBikesAvailable($cityStationData['bikesAvailable']);

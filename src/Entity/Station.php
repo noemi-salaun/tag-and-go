@@ -22,6 +22,7 @@ class Station
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\City")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      */
     private $city;
 
@@ -93,18 +94,20 @@ class Station
         string $address,
         float $latitude,
         float $longitude,
-        int $bikesCapacity
-    )
-    {
-        $this->city = $city;
-        $this->creationDate = $creationDate;
-        $this->lastUpdate = $creationDate;
-        $this->name = $name;
-        $this->address = $address;
-        $this->latitude = $latitude;
-        $this->longitude = $longitude;
-        $this->bikesCapacity = $bikesCapacity;
-        $this->bikesAvailable = $bikesCapacity;
+        int $bikesCapacity,
+        int $bikesAvailable,
+        bool $activated
+    ) {
+        $this->city           = $city;
+        $this->creationDate   = $creationDate;
+        $this->lastUpdate     = $creationDate;
+        $this->name           = $name;
+        $this->address        = $address;
+        $this->latitude       = $latitude;
+        $this->longitude      = $longitude;
+        $this->bikesCapacity  = $bikesCapacity;
+        $this->bikesAvailable = $bikesAvailable;
+        $this->activated      = $activated;
     }
 
     public function getId(): ?int
@@ -190,12 +193,14 @@ class Station
     public function decrementBikesAvailable(): int
     {
         $this->bikesAvailable--;
+
         return $this->bikesAvailable;
     }
 
     public function incrementBikesAvailable(): int
     {
         $this->bikesAvailable++;
+
         return $this->bikesAvailable;
     }
 
@@ -209,7 +214,7 @@ class Station
         $this->activated = $activated;
     }
 
-    public function getCity():City
+    public function getCity(): City
     {
         return $this->city;
     }

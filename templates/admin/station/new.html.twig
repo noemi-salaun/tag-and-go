@@ -1,0 +1,11 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}New Station{% endblock %}
+
+{% block body_admin %}
+    <h1>Create new Station</h1>
+
+    {{ include('admin/station/_form.html.twig') }}
+
+    <a href="{{ path('admin_station_index') }}">back to list</a>
+{% endblock %}

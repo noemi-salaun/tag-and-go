@@ -6,3 +6,8 @@ api:
     resource: ../../src/Controller/Api
     prefix: /api
     type: annotation
+
+admin:
+    resource: ../../src/Controller/Admin
+    prefix: /admin
+    type: annotation

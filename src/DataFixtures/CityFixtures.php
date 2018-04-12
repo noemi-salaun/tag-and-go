@@ -18,8 +18,7 @@ class CityFixtures extends Fixture implements OrderedFixtureInterface
         ];
 
         foreach ($citiesData as $cityData) {
-            $city = new City($cityData['name'], $cityData['latitude'], $cityData['longitude']);
-            $city->setActivated(true);
+            $city = new City($cityData['name'], $cityData['latitude'], $cityData['longitude'], true);
             $manager->persist($city);
 
             // Keep a reference to the city, to be used in the stations fixtures.

@@ -44,14 +44,15 @@ class City
     /**
      * @ORM\Column(type="boolean")
      */
-    private $activated = false;
+    private $activated;
 
 
-    public function __construct(string $name, float $latitude, float $longitude)
+    public function __construct(string $name, float $latitude, float $longitude, bool $activated)
     {
         $this->name      = $name;
         $this->latitude  = $latitude;
         $this->longitude = $longitude;
+        $this->activated = $activated;
     }
 
     public function getId(): ?int

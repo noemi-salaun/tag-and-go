@@ -1,0 +1,53 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Station index{% endblock %}
+
+{% block body_admin %}
+    <h2>Stations</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>City</th>
+                <th>Address</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>BikesCapacity</th>
+                <th>BikesAvailable</th>
+                <th>Activated</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for station in stations %}
+            <tr>
+                <td>{{ station.id }}</td>
+                <td>{{ station.name }}</td>
+                <td>
+                    <a href="{{ path('admin_city_show', {'id': station.city.id}) }}">
+                        {{ station.city.id }} - {{ station.city.name }}
+                    </a>
+                </td>
+                <td>{{ station.address }}</td>
+                <td>{{ station.latitude }}</td>
+                <td>{{ station.longitude }}</td>
+                <td>{{ station.bikesCapacity }}</td>
+                <td>{{ station.bikesAvailable }}</td>
+                <td>{{ station.activated ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('admin_station_show', {'id': station.id}) }}">show</a>
+                    <a href="{{ path('admin_station_edit', {'id': station.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_station_new') }}">Create new</a>
+{% endblock %}
