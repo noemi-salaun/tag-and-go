@@ -1,13 +1,27 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/admin.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Admin</h1>
 
-    <nav>
-        <a href="{{ path('admin_city_index') }}">Cities</a>
-        <a href="{{ path('admin_station_index') }}">Stations</a>
-    </nav>
+    <div class="container">
+        <h1>Tap and Go - Admin</h1>
 
-    {% block body_admin %}{% endblock %}
+        <nav role="navigation">
+            <ul class="nav nav-pills">
+                <li {% if app.request.get('_route') starts with 'admin_city' %}class="active"{% endif %}>
+                    <a href="{{ path('admin_city_index') }}">Cities</a>
+                </li>
+                <li {% if app.request.get('_route') starts with 'admin_station' %}class="active"{% endif %}>
+                    <a href="{{ path('admin_station_index') }}">Stations</a>
+                </li>
+            </ul>
+        </nav>
+
+        {% block body_admin %}{% endblock %}
+    </div>
 
 {% endblock %}

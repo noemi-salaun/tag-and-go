@@ -19,6 +19,12 @@ erase: ## stop and delete containers, clean volumes.
 build: ## build environment and initialize composer and project dependencies
 		docker-compose build
 		docker-compose run --rm php bash -lc 'composer install'
+		docker-compose run --rm php bash -lc 'yarn install'
+		docker-compose run --rm php bash -lc 'yarn run encore dev'
+
+.PHONY: encore
+encore: ## run webpack-encore in watch mode
+		docker-compose exec php bash -lc 'yarn run encore dev --watch'
 
 .PHONY: up
 up: ## spin up environment
@@ -39,9 +45,9 @@ db: wait-for-db ## recreate database
 wait-for-db: ## wait for MariaDB initialization
 		docker-compose exec php php -r "set_time_limit(60);for(;;){if(@fsockopen('mariadb',3306)){break;}echo \"Waiting for MariaDB\n\";sleep(1);}"
 
-.PHONY: bash
-bash: ## gets inside a container, use 's' variable to select a service. make s=php ba
-		docker-compose exec $(s) bash -l
+.PHONY: sh
+sh: ## gets inside a container, use 's' variable to select a service. make s=php sh
+		docker-compose exec $(s) sh -l
 
 .PHONY: logs
 logs: ## look for 's' service logs, make s=php logs
