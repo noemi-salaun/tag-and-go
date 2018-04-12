@@ -6,7 +6,7 @@ services:
 
     mariadb:
       image: mariadb:10.1
-      container_name: tag-and-go-mariadb
+      container_name: tap-and-go-mariadb
       working_dir: /application
       volumes:
         - .:/application
@@ -20,7 +20,7 @@ services:
 
     webserver:
       image: nginx:alpine
-      container_name: tag-and-go-webserver
+      container_name: tap-and-go-webserver
       working_dir: /application
       volumes:
           - .:/application
@@ -32,7 +32,7 @@ services:
 
     php:
       build: phpdocker/php-fpm
-      container_name: tag-and-go-php-fpm
+      container_name: tap-and-go-php-fpm
       working_dir: /application
       volumes:
         - .:/application
